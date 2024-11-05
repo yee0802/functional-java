@@ -50,18 +50,23 @@ public class FunctionalJavaTest {
                 () -> assertEquals(-1, resultArr[4])
                 );
     }
+
     @Test
     @DisplayName("Testing Supplier that returns a list of emails")
     void testSupplierWithListOfEmails(){
-        String[] listOfEmails = {"simon.morgan@northcoders.com",
+        String[] listOfEmails = {
+                "simon.morgan@northcoders.com",
                 "chris.ward@northcoders.com",
                 "info@stackoverflow.com",
-                "hannah.montanna@mileycyrus.com"};
-        String[] listFromSupplier = emailAddresses().get();
+                "hannah.montanna@mileycyrus.com"
+        };
+
+        String[] resultList = functionalJava.emailAddresses.get();
+
         assertAll("Testing elements of the supplier one by one",
-                () - assertTrue(listOfEmails[0]==listFromSupplier[0]),
-                () - assertTrue(listOfEmails[1]==listFromSupplier[1]),
-                () - assertTrue(listOfEmails[2]==listFromSupplier[2]),
-                () - assertTrue(listOfEmails[3]==listFromSupplier[3]));
+                () -> assertEquals(listOfEmails[0], resultList[0]),
+                () -> assertEquals(listOfEmails[1], resultList[1]),
+                () -> assertEquals(listOfEmails[2], resultList[2]),
+                () -> assertEquals(listOfEmails[3], resultList[3]));
     }
 }
