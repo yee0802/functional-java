@@ -8,7 +8,9 @@ import java.util.function.Supplier;
 
 public class FunctionalJava {
     public static void main(String[] args) {
-        emailConsumer.accept(getEmailAddresses.get());
+        FunctionalJava functionalJava = new FunctionalJava();
+
+        functionalJava.printEmailsInList.accept(functionalJava.getEmailAddresses.get());
     }
 
     public Consumer<String[]> indexOfAtSymbol = strings -> Arrays.stream(strings).forEach(s -> System.out.println(s.indexOf("@")));
@@ -33,12 +35,12 @@ public class FunctionalJava {
         System.out.println(STR."Hello \{name}! Hope you are well at the age of \{age}!");
     };
 
-    public static Supplier<List<String>> getEmailAddresses = () -> Arrays.asList(
+    public Supplier<List<String>> getEmailAddresses = () -> Arrays.asList(
             "simon.morgan@northcoders.com",
             "chris.ward@northcoders.com",
             "info@stackoverflow.com",
             "hannah.montanna@mileycyrus.com");
 
-    public static Consumer<List<String>> emailConsumer = emails -> emails.forEach(System.out::println);
+    public Consumer<List<String>> printEmailsInList = emails -> emails.forEach(System.out::println);
 
 }
