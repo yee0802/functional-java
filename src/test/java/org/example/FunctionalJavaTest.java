@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.List;
 
 public class FunctionalJavaTest {
     FunctionalJava functionalJava;
@@ -154,6 +155,31 @@ public class FunctionalJavaTest {
                 () -> assertEquals("Hello Jane! Hope you are well at the age of 31!", resultArr[3]),
                 () -> assertEquals("Hello Abraham! Hope you are well at the age of 92!", resultArr[4]),
                 () -> assertEquals("Hello George! Hope you are well at the age of 66!", resultArr[5])
+        );
+    }
+
+    @Test
+    @DisplayName("printEmailsInList: should print each email in given list")
+    void testPrintEmailsInList() {
+        var emails = functionalJava.getEmailAddresses.get();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
+        System.setOut(printStream);
+
+        functionalJava.printEmailsInList.accept(emails);
+
+        String[] resultArr = outputStream.toString().split("\n");
+
+        System.setOut(sout);
+
+        assertAll("Grouped Assertions for printEmailsInList: ",
+                () -> assertEquals(4, emails.size()),
+                () -> assertEquals("simon.morgan@northcoders.com", resultArr[0]),
+                () -> assertEquals("chris.ward@northcoders.com", resultArr[1]),
+                () -> assertEquals("info@stackoverflow.com", resultArr[2]),
+                () -> assertEquals("hannah.montanna@mileycyrus.com", resultArr[3])
         );
     }
 }
