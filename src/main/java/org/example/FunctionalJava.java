@@ -64,6 +64,9 @@ public class FunctionalJava {
 
     public Consumer<List<Integer>> printNumbersInList = nums -> nums.forEach(System.out::println);
 
+
+
+    // NOTE: what if lists have same elements in different order...
     public BiConsumer<List<Integer>, List<Integer>> compareListOfIntegers = (nums1, nums2) -> {
             System.out.println(nums1.equals(nums2));
     };
