@@ -19,7 +19,7 @@ public class FunctionalJavaTest {
     }
 
     @Test
-    @DisplayName("indexOfAtSymbol: should return correct index of @ symbol in given string")
+    @DisplayName("indexOfAtSymbol: should print correct index of @ symbol in given string")
     void testIndexOfAtSymbol() {
         String[] inputData = {
                 "simon.morgan@northcoders.com",
@@ -52,7 +52,7 @@ public class FunctionalJavaTest {
     }
 
     @Test
-    @DisplayName("Testing Supplier that returns a list of emails")
+    @DisplayName("emailAddresses: Testing Supplier that returns a list of emails")
     void testSupplierWithListOfEmails(){
         String[] listOfEmails = {
                 "simon.morgan@northcoders.com",
@@ -69,36 +69,36 @@ public class FunctionalJavaTest {
                 () -> assertEquals(listOfEmails[2], resultList[2]),
                 () -> assertEquals(listOfEmails[3], resultList[3]));
     }
+
     @Test
-    @DisplayName("indexOfAtSymbol: should return correct index of @ symbol in given string")
+    @DisplayName("isLengthOverFive: should print correct statement if length of string is over 5")
     void testIsLengthOverFive() {
-        String[] inputData = {
-                "simon.morgan@northcoders.com",
-                "chris.ward@northcoders.com",
-                "info",
-                "hanna",
-                "testnorthcoders.com"
-        };
+        var input1 = "hello";
+        var input2 = "cat";
+        var input3 = "spot";
+        var input4 = "astronomical";
+        var input5 = "massive";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
         PrintStream oldOut = System.out;
         System.setOut(printStream);
 
-        functionalJava.IsLengthOverFive.accept(inputData);
+        functionalJava.isLengthOverFive.accept(input1);
+        functionalJava.isLengthOverFive.accept(input2);
+        functionalJava.isLengthOverFive.accept(input3);
+        functionalJava.isLengthOverFive.accept(input4);
+        functionalJava.isLengthOverFive.accept(input5);
 
-        String[] outputStrArr = outputStream.toString().split("\n");
-
+        String[] resultArr = outputStream.toString().split("\n");
         System.setOut(oldOut);
 
-        int[] resultArr = Arrays.stream(outputStrArr).mapToInt(Integer::parseInt).toArray();
+        System.out.println(Arrays.toString(resultArr));
 
-        assertAll("Grouped Assertions for indexOfAtSymbol: ",
-                () -> assertEquals(12, resultArr[0]),
-                () -> assertEquals(10, resultArr[1]),
-                () -> assertEquals(4, resultArr[2]),
-                () -> assertEquals(14, resultArr[3]),
-                () -> assertEquals(-1, resultArr[4])
+        assertAll("Grouped Assertions for isLengthOverFive: ",
+                () -> assertEquals(2, resultArr.length),
+                () -> assertEquals("astronomical!", resultArr[0]),
+                () -> assertEquals("massive!", resultArr[1])
         );
     }
 }

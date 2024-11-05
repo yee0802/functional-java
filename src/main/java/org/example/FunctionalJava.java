@@ -9,9 +9,7 @@ public class FunctionalJava {
 
     }
 
-    public Consumer<String[]> indexOfAtSymbol = strings -> {
-        Arrays.stream(strings).forEach(s -> System.out.println(s.indexOf("@")));
-    };
+    public Consumer<String[]> indexOfAtSymbol = strings -> Arrays.stream(strings).forEach(s -> System.out.println(s.indexOf("@")));
 
     public Supplier<String[]> emailAddresses = () -> new String[]{
                 "simon.morgan@northcoders.com",
@@ -20,4 +18,12 @@ public class FunctionalJava {
                 "hannah.montanna@mileycyrus.com"
         };
 
+    public Consumer<String> isLengthOverFive = s -> {
+        if (s.length() > 5) {
+            System.out.println(s + "!");
+        }
+    };
+    public Consumer<String> printsUsername = s -> {
+        System.out.println(s.split("@")[0]);
+    };
 }
