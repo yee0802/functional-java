@@ -19,7 +19,7 @@ public class FunctionalJavaTest {
     }
 
     @Test
-    @DisplayName("indexOfAtSymbol: should return correct index of @ symbol in given string")
+    @DisplayName("indexOfAtSymbol: should print correct index of @ symbol in given string")
     void testIndexOfAtSymbol() {
         String[] inputData = {
                 "simon.morgan@northcoders.com",
@@ -52,7 +52,7 @@ public class FunctionalJavaTest {
     }
 
     @Test
-    @DisplayName("Testing Supplier that returns a list of emails")
+    @DisplayName("emailAddresses: Testing Supplier that returns a list of emails")
     void testSupplierWithListOfEmails(){
         String[] listOfEmails = {
                 "simon.morgan@northcoders.com",
@@ -68,5 +68,37 @@ public class FunctionalJavaTest {
                 () -> assertEquals(listOfEmails[1], resultList[1]),
                 () -> assertEquals(listOfEmails[2], resultList[2]),
                 () -> assertEquals(listOfEmails[3], resultList[3]));
+    }
+
+    @Test
+    @DisplayName("isLengthOverFive: should print correct statement if length of string is over 5")
+    void testIsLengthOverFive() {
+        var input1 = "hello";
+        var input2 = "cat";
+        var input3 = "spot";
+        var input4 = "astronomical";
+        var input5 = "massive";
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream oldOut = System.out;
+        System.setOut(printStream);
+
+        functionalJava.isLengthOverFive.accept(input1);
+        functionalJava.isLengthOverFive.accept(input2);
+        functionalJava.isLengthOverFive.accept(input3);
+        functionalJava.isLengthOverFive.accept(input4);
+        functionalJava.isLengthOverFive.accept(input5);
+
+        String[] resultArr = outputStream.toString().split("\n");
+        System.setOut(oldOut);
+
+        System.out.println(Arrays.toString(resultArr));
+
+        assertAll("Grouped Assertions for isLengthOverFive: ",
+                () -> assertEquals(2, resultArr.length),
+                () -> assertEquals("astronomical!", resultArr[0]),
+                () -> assertEquals("massive!", resultArr[1])
+        );
     }
 }
