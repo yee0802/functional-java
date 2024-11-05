@@ -31,12 +31,13 @@ public class FunctionalJavaTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
         System.setOut(printStream);
 
         functionalJava.indexOfAtSymbol.accept(inputData);
         String[] outputStrArr = outputStream.toString().split("\n");
 
-        System.setOut(System.out);
+        System.setOut(sout);
 
         int[] resultArr = Arrays.stream(outputStrArr).mapToInt(Integer::parseInt).toArray();
 
@@ -79,6 +80,7 @@ public class FunctionalJavaTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
         System.setOut(printStream);
 
         functionalJava.isLengthOverFive.accept(input1);
@@ -89,7 +91,7 @@ public class FunctionalJavaTest {
 
         String[] resultArr = outputStream.toString().split("\n");
 
-        System.setOut(System.out);
+        System.setOut(sout);
 
         assertAll("Grouped Assertions for isLengthOverFive: ",
                 () -> assertEquals(2, resultArr.length),
@@ -110,18 +112,48 @@ public class FunctionalJavaTest {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
         System.setOut(printStream);
 
         Arrays.stream(listOfEmails).forEach(s -> functionalJava.printsUsername.accept(s));
         String[] resultArr = outputStream.toString().split("\n");
 
-        System.setOut(System.out);
+        System.setOut(sout);
 
         assertAll("Grouped Assertions for printsUsername: ",
                 () -> assertEquals("simon.morgan", resultArr[0]),
                 () -> assertEquals("Chris.ward", resultArr[1]),
                 () -> assertEquals("info", resultArr[2]),
                 () -> assertEquals("hannah.montanna", resultArr[3])
+        );
+    }
+
+    @Test
+    @DisplayName("printsAgeAndName: should print greeting with given name & age")
+    void testPrintsAgeAndName() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
+        System.setOut(printStream);
+
+        functionalJava.printsAgeAndName.accept("Kye", 22);
+        functionalJava.printsAgeAndName.accept("Victor", 36);
+        functionalJava.printsAgeAndName.accept("John", 55);
+        functionalJava.printsAgeAndName.accept("Jane", 31);
+        functionalJava.printsAgeAndName.accept("Abraham", 92);
+        functionalJava.printsAgeAndName.accept("George", 66);
+
+        String[] resultArr = outputStream.toString().split("\n");
+
+        System.setOut(sout);
+
+        assertAll("Grouped Assertions for printsAgeAndName: ",
+                () -> assertEquals("Hello Kye! Hope you are well at the age of 22!", resultArr[0]),
+                () -> assertEquals("Hello Victor! Hope you are well at the age of 36!", resultArr[1]),
+                () -> assertEquals("Hello John! Hope you are well at the age of 55!", resultArr[2]),
+                () -> assertEquals("Hello Jane! Hope you are well at the age of 31!", resultArr[3]),
+                () -> assertEquals("Hello Abraham! Hope you are well at the age of 92!", resultArr[4]),
+                () -> assertEquals("Hello George! Hope you are well at the age of 66!", resultArr[5])
         );
     }
 }
