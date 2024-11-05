@@ -101,4 +101,35 @@ public class FunctionalJavaTest {
                 () -> assertEquals("massive!", resultArr[1])
         );
     }
+    @Test
+    @DisplayName("printsUsername: should print the username")
+    void testprintsUsername() {
+        var input1 = "simon.morgan@northcoders.com";
+        var input2 = "chris.ward@northcoders.com";
+        var input3 = "info@stackoverflow.com";
+        var input4 = "hannah.montana@mileycyrus.com";
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream oldOut = System.out;
+        System.setOut(printStream);
+
+        functionalJava.printsUsername.accept(input1);
+        functionalJava.printsUsername.accept(input2);
+        functionalJava.printsUsername.accept(input3);
+        functionalJava.printsUsername.accept(input4);
+       // functionalJava.isLengthOverFive.accept(input5);
+
+        String[] resultArr = outputStream.toString().split("\n");
+        System.setOut(oldOut);
+
+        System.out.println(Arrays.toString(resultArr));
+
+        assertAll("Grouped Assertions for isLengthOverFive: ",
+                () -> assertEquals("simon.morgan", resultArr[0]),
+                () -> assertEquals("chris.ward", resultArr[1]),
+                () -> assertEquals("info", resultArr[2]),
+                () -> assertEquals("hannah.montana", resultArr[3])
+        );
+    }
 }
