@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -10,7 +11,16 @@ public class FunctionalJava {
     public static void main(String[] args) {
         FunctionalJava functionalJava = new FunctionalJava();
 
-        functionalJava.printEmailsInList.accept(functionalJava.getEmailAddresses.get());
+        // functionalJava.printEmailsInList.accept(functionalJava.getEmailAddresses.get());
+
+        List<Integer> numList = new ArrayList<>();
+        numList.add(5);
+        numList.add(8);
+        numList.add(3);
+        numList.add(6);
+        numList.add(67);
+
+        functionalJava.squareNumbers.andThen(functionalJava.printNumbersInList).accept(numList);
     }
 
     public Consumer<String[]> indexOfAtSymbol = strings -> Arrays.stream(strings).forEach(s -> System.out.println(s.indexOf("@")));
@@ -43,4 +53,7 @@ public class FunctionalJava {
 
     public Consumer<List<String>> printEmailsInList = emails -> emails.forEach(System.out::println);
 
+    public Consumer<List<Integer>> squareNumbers = nums -> nums.replaceAll(num -> num * num);
+
+    public Consumer<List<Integer>> printNumbersInList = nums -> nums.forEach(System.out::println);
 }
