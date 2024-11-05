@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FunctionalJavaTest {
     FunctionalJava functionalJava;
@@ -124,7 +125,7 @@ public class FunctionalJavaTest {
 
         assertAll("Grouped Assertions for printsUsername: ",
                 () -> assertEquals("simon.morgan", resultArr[0]),
-                () -> assertEquals("Chris.ward", resultArr[1]),
+                () -> assertEquals("chris.ward", resultArr[1]),
                 () -> assertEquals("info", resultArr[2]),
                 () -> assertEquals("hannah.montanna", resultArr[3])
         );
@@ -217,7 +218,7 @@ public class FunctionalJavaTest {
     }
 
     @Test
-    @DisplayName("compareListOfIntegers: should square each number in given list")
+    @DisplayName("compareListOfIntegers: should return true or false if given List of Integers are the same")
     void testCompareListOfIntegers() {
         List<Integer> numList1 = List.of(5,8,3,6,67);
         List<Integer> numList2 = List.of(5,8,3,6,67);
@@ -243,6 +244,53 @@ public class FunctionalJavaTest {
                 () -> assertTrue(Boolean.parseBoolean(resultArr[1])),
                 () -> assertFalse(Boolean.parseBoolean(resultArr[2])),
                 () -> assertFalse(Boolean.parseBoolean(resultArr[3]))
+        );
+    }
+
+    @Test
+    @DisplayName("filterEmailAddresses: should filter commercial emails in given list")
+    void testFilterEmailAddressesShouldReturnValidCommercialEmails() {
+        var emailsList = functionalJava.emailAddressSupplier;
+
+        var resultList = functionalJava.filterEmailAddresses.apply(emailsList, FunctionalJava.isValidCommercialEmail);
+
+        assertAll("Grouped Assertions for filterEmailAddresses for commercial emails: ",
+                () -> assertEquals(3, resultList.size()),
+                () -> assertEquals("simon.morgan@northcoders.com", resultList.getFirst()),
+                () -> assertEquals("chris.ward@northcoders.com", resultList.get(1)),
+                () -> assertEquals("shrek@duloc.com", resultList.getLast())
+                );
+    }
+
+    @Test
+    @DisplayName("filterEmailAddresses: should filter British emails in given list")
+    void testFilterEmailAddressesShouldReturnValidBritishEmails() {
+        var emailsList = functionalJava.emailAddressSupplier;
+
+        var resultList = functionalJava.filterEmailAddresses.apply(emailsList, FunctionalJava.isValidBritishEmail);
+
+        assertAll("Grouped Assertions for filterEmailAddresses for British emails: ",
+                () -> assertEquals(2, resultList.size()),
+                () -> assertEquals("link@hyrule.co.uk", resultList.getFirst()),
+                () -> assertEquals("ziggy@spidersfrommars.co.uk", resultList.getLast())
+        );
+    }
+
+    @Test
+    @DisplayName("filterEmailAddresses: should filter non commercial or British emails in given list")
+    void testFilterEmailAddressesShouldReturnNonBritishOrCommercialEmails() {
+        var emailsList = functionalJava.emailAddressSupplier;
+
+        var resultList = functionalJava.filterEmailAddresses.apply(emailsList, Predicate.not(FunctionalJava.isValidCommercialEmail.or(FunctionalJava.isValidBritishEmail)));
+
+        assertAll("Grouped Assertions for filterEmailAddresses for non commercial or British emails: ",
+                () -> assertEquals(5, resultList.size()),
+                () -> assertEquals("mario@plumbing.it", resultList.getFirst()),
+                () -> assertEquals("ellie@northcoders.js", resultList.get(1)),
+                () -> assertEquals("java@oracle.jvm", resultList.get(2)),
+                () -> assertEquals("lemmy@motorhead.co,uk", resultList.get(3)),
+                () -> assertEquals("me@myhouse.sleep", resultList.getLast())
+
         );
     }
 }
