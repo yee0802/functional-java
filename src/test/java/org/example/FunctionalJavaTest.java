@@ -215,4 +215,34 @@ public class FunctionalJavaTest {
                 () -> assertEquals(4489, resultArr[4])
         );
     }
+
+    @Test
+    @DisplayName("compareListOfIntegers: should square each number in given list")
+    void testCompareListOfIntegers() {
+        List<Integer> numList1 = List.of(5,8,3,6,67);
+        List<Integer> numList2 = List.of(5,8,3,6,67);
+        List<Integer> numList3 = List.of(3,4,42,77,123);
+        List<Integer> numList4 = List.of(2,11,54,98,5433);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
+        System.setOut(printStream);
+
+        functionalJava.compareListOfIntegers.accept(numList1, numList2);
+        functionalJava.compareListOfIntegers.accept(numList2, numList2);
+        functionalJava.compareListOfIntegers.accept(numList2, numList3);
+        functionalJava.compareListOfIntegers.accept(numList3, numList4);
+
+        String[] resultArr = outputStream.toString().split("\n");
+
+        System.setOut(sout);
+
+        assertAll("Grouped Assertions for compareListOfIntegers: ",
+                () -> assertTrue(Boolean.parseBoolean(resultArr[0])),
+                () -> assertTrue(Boolean.parseBoolean(resultArr[1])),
+                () -> assertFalse(Boolean.parseBoolean(resultArr[2])),
+                () -> assertFalse(Boolean.parseBoolean(resultArr[3]))
+        );
+    }
 }
