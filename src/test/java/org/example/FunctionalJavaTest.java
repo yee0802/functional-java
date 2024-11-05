@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -180,6 +181,38 @@ public class FunctionalJavaTest {
                 () -> assertEquals("chris.ward@northcoders.com", resultArr[1]),
                 () -> assertEquals("info@stackoverflow.com", resultArr[2]),
                 () -> assertEquals("hannah.montanna@mileycyrus.com", resultArr[3])
+        );
+    }
+
+    @Test
+    @DisplayName("squareNumbers: should square each number in given list")
+    void testSquareNumbers() {
+        List<Integer> numList = new ArrayList<>();
+        numList.add(5);
+        numList.add(8);
+        numList.add(3);
+        numList.add(6);
+        numList.add(67);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream sout = System.out;
+        System.setOut(printStream);
+
+        functionalJava.squareNumbers.andThen(functionalJava.printNumbersInList).accept(numList);
+
+        String[] outputStrArr = outputStream.toString().split("\n");
+
+        System.setOut(sout);
+
+        int[] resultArr = Arrays.stream(outputStrArr).mapToInt(Integer::parseInt).toArray();
+
+        assertAll("Grouped Assertions for squareNumbers: ",
+                () -> assertEquals(25, resultArr[0]),
+                () -> assertEquals(64, resultArr[1]),
+                () -> assertEquals(9, resultArr[2]),
+                () -> assertEquals(36, resultArr[3]),
+                () -> assertEquals(4489, resultArr[4])
         );
     }
 }
