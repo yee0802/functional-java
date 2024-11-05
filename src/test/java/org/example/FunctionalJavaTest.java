@@ -69,4 +69,36 @@ public class FunctionalJavaTest {
                 () -> assertEquals(listOfEmails[2], resultList[2]),
                 () -> assertEquals(listOfEmails[3], resultList[3]));
     }
+    @Test
+    @DisplayName("indexOfAtSymbol: should return correct index of @ symbol in given string")
+    void testIsLengthOverFive() {
+        String[] inputData = {
+                "simon.morgan@northcoders.com",
+                "chris.ward@northcoders.com",
+                "info",
+                "hanna",
+                "testnorthcoders.com"
+        };
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream oldOut = System.out;
+        System.setOut(printStream);
+
+        functionalJava.IsLengthOverFive.accept(inputData);
+
+        String[] outputStrArr = outputStream.toString().split("\n");
+
+        System.setOut(oldOut);
+
+        int[] resultArr = Arrays.stream(outputStrArr).mapToInt(Integer::parseInt).toArray();
+
+        assertAll("Grouped Assertions for indexOfAtSymbol: ",
+                () -> assertEquals(12, resultArr[0]),
+                () -> assertEquals(10, resultArr[1]),
+                () -> assertEquals(4, resultArr[2]),
+                () -> assertEquals(14, resultArr[3]),
+                () -> assertEquals(-1, resultArr[4])
+        );
+    }
 }
