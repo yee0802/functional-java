@@ -15,4 +15,5 @@ public class BookingConfirmation {
                         .sum();
         return totalPrice.get();
     }
+
 }

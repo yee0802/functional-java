@@ -6,10 +6,11 @@ import java.util.function.Supplier;
 public class TicketBooking {
     private LiveEvent event;
     private int numberOfTickets;
+
     Consumer<TicketBooking> uptadeTickets = this :: updateTickets;
 
     //TO BE UPDATED:
-    // handle the cases when ticket availability is insufficient
+    // handle the cases when ticket availability is insufficient (Done)
     public void updateTickets(TicketBooking booking){
         if(event.getTicketAvailability()>=booking.numberOfTickets) {
             int availability = event.getTicketAvailability() - booking.numberOfTickets;
