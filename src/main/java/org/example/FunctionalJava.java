@@ -56,4 +56,8 @@ public class FunctionalJava {
     public Consumer<List<Integer>> squareNumbers = nums -> nums.replaceAll(num -> num * num);
 
     public Consumer<List<Integer>> printNumbersInList = nums -> nums.forEach(System.out::println);
+
+    public BiConsumer<List<Integer>, List<Integer>> compareListOfIntegers = (nums1, nums2) -> {
+            System.out.println(nums1.equals(nums2));
+    };
 }
